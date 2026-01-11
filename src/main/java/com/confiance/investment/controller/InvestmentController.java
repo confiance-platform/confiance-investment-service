@@ -18,14 +18,14 @@ public class InvestmentController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<Page<InvestmentProduct>>> getAllProducts(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size) {
         Page<InvestmentProduct> products = repository.findAll(PageRequest.of(page, size));
         return ResponseEntity.ok(ApiResponse.success(products));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<InvestmentProduct>> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<InvestmentProduct>> getProduct(@PathVariable("id") Long id) {
         return repository.findById(id)
                 .map(product -> ResponseEntity.ok(ApiResponse.success(product)))
                 .orElse(ResponseEntity.notFound().build());
