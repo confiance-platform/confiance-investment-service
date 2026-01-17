@@ -5,19 +5,20 @@ spring:
   application:
     name: investment-service
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/confiance_investments?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://${MYSQL_HOST:localhost}:3306/confiance_investments?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-  redis:
-    host: ${SPRING_REDIS_HOST:localhost}
-    port: ${SPRING_REDIS_PORT:6379}
-    password: ${SPRING_REDIS_PASSWORD:}
-    timeout: 60000
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
+      password: ${SPRING_REDIS_PASSWORD:}
+      timeout: 60000
 
 eureka:
   client:
@@ -29,8 +30,8 @@ eureka:
     prefer-ip-address: true
 
 jwt:
-  secret: confianceSecretKeyForJWTTokenGenerationAndValidation2024
-  expiration: 86400000
+  secret: ${JWT_SECRET:confianceSecretKeyForJWTTokenGenerationAndValidation2024}
+  expiration: ${JWT_EXPIRATION:86400000}
   refresh-expiration: 604800000
 
 management:
